@@ -358,23 +358,15 @@ class CardStack extends Component {
         switch (direction) {
           case 'left':
             this.props.onSwipedLeft(index);
-            if (this.state.cards[index] && this.state.cards[index].props.onSwipedLeft)
-              this.state.cards[index] && this.state.cards[index].props.onSwipedLeft();
             break;
           case 'right':
             this.props.onSwipedRight(index);
-            if (this.state.cards[index] && this.state.cards[index].props.onSwipedRight)
-              this.state.cards[index].props.onSwipedRight();
             break;
           case 'top':
             this.props.onSwipedTop(index);
-            if (this.state.cards[index] && this.state.cards[index].props.onSwipedTop)
-              this.state.cards[index].props.onSwipedTop();
             break;
           case 'bottom':
             this.props.onSwipedBottom(index);
-            if (this.state.cards[index] && this.state.cards[index].props.onSwipedBottom)
-              this.state.cards[index].props.onSwipedBottom();
             break;
           default:
         }
@@ -430,7 +422,7 @@ class CardStack extends Component {
               { scale: (topCard === 'cardB') ? 1 : scale },
             ]
           }, this.props.cardContainerStyle]}>
-          {cardB}
+          {cardB ? cardB(topCard === 'cardB') : null}
         </Animated.View>
         <Animated.View
           {...this._setPointerEvents(topCard, 'cardA')}
@@ -449,7 +441,7 @@ class CardStack extends Component {
               { scale: (topCard === 'cardA') ? 1 : scale },
             ]
           }, this.props.cardContainerStyle]}>
-          {cardA}
+          {cardA ? cardA(topCard === 'cardA') : null}
         </Animated.View>
 
       </View>
