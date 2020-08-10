@@ -125,7 +125,8 @@ class CardStack extends Component {
 
   componentDidUpdate(prevProps) {
     if (typeof this.props.children === 'undefined') return;
-    if (!this._isSameChildren(this.props.children, prevProps.children)) {
+    debugger
+    if (!this._isSameChildren(this.props.children, prevProps.children) || this.props.extraData != prevProps.extraData) {
       const children = Array.isArray(this.props.children) ? this.props.children : [this.props.children];
       let aIndex = (this.state.topCard == 'cardA') ?
         this._getIndex(this.state.sindex - 2, children.length) :
@@ -133,6 +134,7 @@ class CardStack extends Component {
       let bIndex = (this.state.topCard == 'cardB') ?
         this._getIndex(this.state.sindex - 2, children.length) :
         this._getIndex(this.state.sindex - 1, children.length);
+      debugger
       this.setState({
         cards: children,
         cardA: children[aIndex] || null,
