@@ -251,18 +251,22 @@ class CardStack extends Component {
 
       switch (direction) {
         case 'top':
+          this.props.onDrag({ x: 0, y: -height });
           this.state.drag.setValue({ x: 0, y: -height });
           this.state.dragDistance.setValue(height);
           break;
         case 'left':
+          this.props.onDrag({ x: -width, y: 0 });
           this.state.drag.setValue({ x: -width, y: 0 });
           this.state.dragDistance.setValue(width);
           break;
         case 'right':
+          this.props.onDrag({ x: width, y: 0 });
           this.state.drag.setValue({ x: width, y: 0 });
           this.state.dragDistance.setValue(width);
           break;
         case 'bottom':
+          this.props.onDrag({ x: 0, y: height });
           this.state.drag.setValue({ x: 0, y: height });
           this.state.dragDistance.setValue(width);
           break;
@@ -350,6 +354,7 @@ class CardStack extends Component {
             cardA: cards[nextCard],
           };
         }
+        this.props.onDrag({ x: 0, y: 0 });
         this.state.drag.setValue({ x: 0, y: 0 });
         this.state.dragDistance.setValue(0);
         this.setState({
