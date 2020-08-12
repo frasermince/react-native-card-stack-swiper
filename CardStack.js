@@ -125,9 +125,11 @@ class CardStack extends Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (typeof this.props.children === 'undefined') return;
-    debugger
+    if (this.state.drag.x != prevState.drag.x || this.state.drag.y != prevState.drag.y) {
+      this.props.onDrag(this.state.drag);
+    }
     if (!this._isSameChildren(this.props.children, prevProps.children) || this.props.extraData != prevProps.extraData) {
       const children = Array.isArray(this.props.children) ? this.props.children : [this.props.children];
       let aIndex = (this.state.topCard == 'cardA') ?
@@ -251,22 +253,18 @@ class CardStack extends Component {
 
       switch (direction) {
         case 'top':
-          this.props.onDrag({ x: 0, y: -height });
           this.state.drag.setValue({ x: 0, y: -height });
           this.state.dragDistance.setValue(height);
           break;
         case 'left':
-          this.props.onDrag({ x: -width, y: 0 });
           this.state.drag.setValue({ x: -width, y: 0 });
           this.state.dragDistance.setValue(width);
           break;
         case 'right':
-          this.props.onDrag({ x: width, y: 0 });
           this.state.drag.setValue({ x: width, y: 0 });
           this.state.dragDistance.setValue(width);
           break;
         case 'bottom':
-          this.props.onDrag({ x: 0, y: height });
           this.state.drag.setValue({ x: 0, y: height });
           this.state.dragDistance.setValue(width);
           break;
@@ -354,7 +352,6 @@ class CardStack extends Component {
             cardA: cards[nextCard],
           };
         }
-        this.props.onDrag({ x: 0, y: 0 });
         this.state.drag.setValue({ x: 0, y: 0 });
         this.state.dragDistance.setValue(0);
         this.setState({
