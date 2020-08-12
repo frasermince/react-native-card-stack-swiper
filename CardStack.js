@@ -63,7 +63,6 @@ class CardStack extends Component {
         const { verticalSwipe, horizontalSwipe } = this.props;
         const dragDistance = this.distance((horizontalSwipe) ? gestureState.dx : 0, (verticalSwipe) ? gestureState.dy : 0);
         const dragValue = { x: (horizontalSwipe) ? gestureState.dx : 0, y: (verticalSwipe) ? gestureState.dy : 0 }
-        this.props.onDrag(dragValue);
         this.state.dragDistance.setValue(dragDistance);
         this.state.drag.setValue(dragValue);
       },
