@@ -62,8 +62,10 @@ class CardStack extends Component {
         this.props.onSwipe(movedX, movedY);
         const { verticalSwipe, horizontalSwipe } = this.props;
         const dragDistance = this.distance((horizontalSwipe) ? gestureState.dx : 0, (verticalSwipe) ? gestureState.dy : 0);
+        const dragValue = { x: (horizontalSwipe) ? gestureState.dx : 0, y: (verticalSwipe) ? gestureState.dy : 0 }
+        this.props.onDrag(dragDistance, dragValue);
         this.state.dragDistance.setValue(dragDistance);
-        this.state.drag.setValue({ x: (horizontalSwipe) ? gestureState.dx : 0, y: (verticalSwipe) ? gestureState.dy : 0 });
+        this.state.drag.setValue(dragValue);
       },
       onPanResponderTerminationRequest: (evt, gestureState) => true,
       onPanResponderRelease: (evt, gestureState) => {
@@ -464,6 +466,7 @@ CardStack.propTypes = {
   onSwipeStart: PropTypes.func,
   onSwipeEnd: PropTypes.func,
   onSwiped: PropTypes.func,
+  onDrag: PropTypes.func,
   onSwipedLeft: PropTypes.func,
   onSwipedRight: PropTypes.func,
   onSwipedTop: PropTypes.func,
@@ -496,6 +499,7 @@ CardStack.defaultProps = {
   onSwipeStart: () => null,
   onSwipeEnd: () => null,
   onSwiped: () => { },
+  onDrag: () => { },
   onSwipedLeft: () => { },
   onSwipedRight: () => { },
   onSwipedTop: () => { },
