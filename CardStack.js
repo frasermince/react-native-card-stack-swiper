@@ -126,6 +126,7 @@ class CardStack extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (typeof this.props.children === 'undefined') return;
+    debugger
     if (this.state.drag.x != prevState.drag.x || this.state.drag.y != prevState.drag.y) {
       this.props.onDrag(this.state.drag);
     }
