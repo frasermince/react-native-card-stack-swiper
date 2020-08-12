@@ -20,8 +20,9 @@ class CardStack extends Component {
 
   constructor(props) {
     super(props);
+    let drag = new Animated.ValueXY({ x: 0, y: 0 })
     this.state = {
-      drag: new Animated.ValueXY({ x: 0, y: 0 }),
+      drag: drag,
       dragDistance: new Animated.Value(0),
       sindex: 0, // index to the next card to be renderd mod card.length
       cardA: null,
@@ -30,6 +31,7 @@ class CardStack extends Component {
       cards: [],
       touchStart: 0,
     };
+    this.props.setDrag(drag);
     this.distance = this.constructor.distance;
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => false,
@@ -126,11 +128,6 @@ class CardStack extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (typeof this.props.children === 'undefined') return;
-    console.log("PREV DRAG", prevState.drag);
-    console.log("CURRENT DRAG", this.state.drag);
-    if (this.state.drag.x != prevState.drag.x || this.state.drag.y != prevState.drag.y) {
-      this.props.onDrag(this.state.drag);
-    }
     if (!this._isSameChildren(this.props.children, prevProps.children) || this.props.extraData != prevProps.extraData) {
       const children = Array.isArray(this.props.children) ? this.props.children : [this.props.children];
       let aIndex = (this.state.topCard == 'cardA') ?
@@ -469,7 +466,7 @@ CardStack.propTypes = {
   onSwipeStart: PropTypes.func,
   onSwipeEnd: PropTypes.func,
   onSwiped: PropTypes.func,
-  onDrag: PropTypes.func,
+  setDrag: PropTypes.func,
   onSwipedLeft: PropTypes.func,
   onSwipedRight: PropTypes.func,
   onSwipedTop: PropTypes.func,
@@ -502,7 +499,7 @@ CardStack.defaultProps = {
   onSwipeStart: () => null,
   onSwipeEnd: () => null,
   onSwiped: () => { },
-  onDrag: () => { },
+  setDrag: () => { },
   onSwipedLeft: () => { },
   onSwipedRight: () => { },
   onSwipedTop: () => { },
